@@ -5,18 +5,19 @@ import User.User;
 import User.UserBuilder;
 import org.openqa.selenium.WebElement;
 
+
 public class LoginPage extends HomePage {
 
 
-
-
+    public LoginPage() {
+    }
 
     @Override
     protected void initElements() {
-        loginPhoneNumber = searchLocator.findByXpath("//input[@name='phone']");
-        //Continue  = searchLocator.findByXpath(" //button[@type='submit'] //@class");
-        loginByEmail = searchLocator.findByXpath("//button[@type='button'][contains(@class ,'df jcc bd0 cup on aic uppercase medium mb')]");
+
         register  =  searchLocator.findByCssSelector("p.tc a.link");
+        Continue  = searchLocator.findByXpath("//button[@type='submit']");
+      //
 
     }
     //Locator
@@ -26,32 +27,62 @@ public class LoginPage extends HomePage {
     private WebElement register;
 
 
+
 //Page Object
+    private WebElement getEmail(){
+        return searchLocator.findByXpath("//input[@name='email']");
+    }
+    private WebElement getPassword(){
+        return searchLocator.findByXpath("//input[@name=\"password\"]");
+    }
 
-    public WebElement getLoginPhoneNumber() {return loginPhoneNumber;}
 
-    public WebElement getContinue() {return Continue;}
+    public WebElement getLoginPhoneNumber() {return searchLocator.findByXpath("//input[@name='phone']");}
 
-    public WebElement getLoginByEmail(){return loginByEmail;}
+    public WebElement getContinue() {
+        initElements();
+    return Continue;}
+
+
+ public WebElement getLoginByEmail(){return
+         searchLocator.findByXpath(
+                 "//button[@type='button'][contains(@class ,'df jcc bd0 cup on aic uppercase medium mb')]");}
+
 
     public WebElement getRegister() {return register;}
 
+   private void clickOnLoginByEmail(){
+        getLoginByEmail().click();
+   }
    private   void sendTextInLoginFormPhoneNumber(User user){
         getLoginPhoneNumber().sendKeys(user.getPhone());
     }
+    private void sendTextInLoginFormByEmail(User user){
+      getEmail().sendKeys(user.getEmail());
+
+    }
+    private  void sendPasswordInPasswordForm(User user){
+        getPassword().sendKeys(user.getPassword());
+    }
     public void clickOnContinueButton(){
-        Continue  = searchLocator.findByXpath(" //button[@type='submit'] //@class");
-        Continue.click();
+        getContinue().click();
+
     }
 //Business logic
 
-    public LoggedUser getLoginByPhone(User user){
+    public LoggedUserByPhone getLoginByPhone(User user){
        sendTextInLoginFormPhoneNumber(user);
        clickOnContinueButton();
-        return new LoggedUser();
+        return new LoggedUserByPhone();
     }
-    public LoginPage sayHi(){
-        return new LoginPage();
+
+    public LoggedUserByEmail getLoginByEmail(User user){
+         clickOnLoginByEmail();
+        sendTextInLoginFormByEmail(user);
+        clickOnContinueButton();
+        sendPasswordInPasswordForm(user);
+        clickOnContinueButton();
+        return  new LoggedUserByEmail();
     }
 
 }

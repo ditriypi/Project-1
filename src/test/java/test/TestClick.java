@@ -3,30 +3,45 @@ package test;
 
 import User.User;
 import User.UserBuilder;
+import org.testng.Assert;
 import org.testng.annotations.DataProvider;
-import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import pages.HomePage;
-import pages.LoggedUser;
+import pages.LoggedUserByEmail;
+import pages.LoggedUserByPhone;
 import pages.LoginPage;
-import test.TestRunner;
 
 public class TestClick extends TestRunner {
 
     @DataProvider
     public Object[][] dataSuccessful() {
-        return new Object[][]{{UserBuilder.createUser()}
+        return new Object[][]{{UserBuilder.existUser()}
         };
+
+    }
+    String PHONE_NUMBER_EXIST = "380664648120";
+    @Test(dataProvider = "dataSuccessful")
+    public void loginByPhoneTest(User user){
+
+        HomePage homePage = loadApplication();
+         LoginPage loginPage = homePage.goToLoginField();
+         LoggedUserByPhone loggedUser = loginPage.getLoginByPhone(user);
+
+         String number = loggedUser.getTextPhoneNumber();
+        Assert.assertTrue(number.contains(PHONE_NUMBER_EXIST));
+
     }
     @Test(dataProvider = "dataSuccessful")
-    public void loginTest(User user){
+    public void loginByEmailTest(User user){
+        HomePage homePage = loadApplication();
+        LoginPage loginPage = homePage.goToLoginField();
 
-        HomePage homePage = loadApplication().goToLoginField();
+        LoggedUserByEmail loggedUserByEmail = loginPage.getLoginByEmail(user);
 
-        // LoginPage loginPage = loadApplication()
+        loggedUserByEmail.clickOnUser();
+      String name =  loggedUserByEmail.getUserNameText();
 
-       // loginPage.getLoginByPhone(user);
+        Assert.assertTrue(name.contains(user.getUser()));
 
-
-    }
+    };
 }

@@ -1,9 +1,7 @@
 package pages;
 
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.ExpectedConditions;
+
 import tools.search.Search;
 import tools.search.SearchStrategy;
 import org.openqa.selenium.WebElement;
