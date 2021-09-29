@@ -6,19 +6,16 @@ import User.UserBuilder;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import pages.HomePage;
-import pages.LoggedUserByEmail;
-import pages.LoggedUserByPhone;
-import pages.LoginPage;
+import pages.*;
 
-public class TestClick extends TestRunner {
+public class DataTest extends TestRunner {
 
     @DataProvider
     public Object[][] dataSuccessful() {
         return new Object[][]{{UserBuilder.existUser()}
         };
-
     }
+
     String PHONE_NUMBER_EXIST = "380664648120";
     @Test(dataProvider = "dataSuccessful")
     public void loginByPhoneTest(User user){
@@ -43,5 +40,25 @@ public class TestClick extends TestRunner {
 
         Assert.assertTrue(name.contains(user.getUser()));
 
+
     };
+    @DataProvider
+    public Object[][] dataRegister() {
+        return new Object[][]{{UserBuilder.createUser()}
+        };
+    }
+
+    @Test(dataProvider = "dataRegister")
+    public void LoginTest(User user){
+
+       HomePage homePage = loadApplication();
+
+       LoginPage loginPage = homePage.goToLoginField();
+
+        RegistrationPage registrationPage = loginPage.goToRegisterPage()
+                .registerNewUser(user);
+        String name = registrationPage.getUserName();
+        Assert.assertTrue(name.contains(user.getUser()));
+
+    }
 }
