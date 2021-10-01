@@ -72,10 +72,4 @@ public class LoggedUserByEmail extends LoginPage {
     public String getUserNameText(){
       return   getUserName().getText();
     }
-    public void clickONsd() {
-
-    }
-
-
-
 }

@@ -36,7 +36,7 @@ public class DataTest extends TestRunner {
         LoggedUserByEmail loggedUserByEmail = loginPage.getLoginByEmail(user);
 
         loggedUserByEmail.clickOnUser();
-      String name =  loggedUserByEmail.getUserNameText();
+        String name =  loggedUserByEmail.getUserNameText();
 
         Assert.assertTrue(name.contains(user.getUser()));
 

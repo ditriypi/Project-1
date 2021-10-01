@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 public class ImplicitWait extends Search {
 
 
-   private Long TIME_PAUSE =  4L;
+   private Long TIME_PAUSE =  7L;
 
     public ImplicitWait() {
         BrowserChoice.getDriver().manage().timeouts().implicitlyWait(TIME_PAUSE, TimeUnit.SECONDS);

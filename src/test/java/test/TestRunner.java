@@ -12,6 +12,7 @@ private  static WebDriver driver;
    public HomePage loadApplication(){
        BrowserChoice.SetDriver(DriverList.CHROMEDRIVER);
        driver = BrowserChoice.getDriver();
+       driver.manage().window().maximize();
        driver.get(URL);
       // BrowserChoice.getDriver().get(URL);
        return new  HomePage();

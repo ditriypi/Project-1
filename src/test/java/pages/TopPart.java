@@ -2,6 +2,7 @@ package pages;
 
 
 
+import org.openqa.selenium.Keys;
 import tools.search.Search;
 import tools.search.SearchStrategy;
 import org.openqa.selenium.WebElement;
@@ -19,16 +20,24 @@ public abstract class TopPart {
 
         singIn = searchLocator.findByXpath("//button[contains(@class,'dn account-0-2-13')]");
 
-        search = searchLocator.findByXpath("//form[@class='full-width full-height ovh df jcsb aic container-0-2-60']");
+        search = searchLocator.findByXpath("//form[contains(@class,'full-width full-height ovh df jcsb aic container')] //input");
 
-        compareItems = searchLocator.findByXpath("//button[@class='pr cup bd0 on aic jcc action-0-2-74']");
+        compareItems = searchLocator.findByXpath("//a[@class='dn aic jcc compare-0-2-14']//div[@class='pr']//*[name()='svg']");
 
-       basket = searchLocator.findByXpath("//button[@class='pr cup bd0 on aic jcc action-0-2-74 disable-0-2-76']");
+       basket = searchLocator.findByXpath("//div[@class='dib df basket-0-2-11'] //button");
        wishList = searchLocator.findByXpath("//a[@class='dn aic jcc wishlist-0-2-15']");
-       language = searchLocator.findByXpath("//div[@class='languages-0-2-40'] //a");
-       catalog = searchLocator.findByXpath("//button[@class='dn aic jcfs cup on bd0 catalog-0-2-46']");
+       language = searchLocator.findByXpath("//div[contains(@class,'languages')]");
+       catalog = searchLocator.findByXpath("//button[contains(@class, 'dn aic jcfs cup on bd0 catalog')]");
 
     };
+
+    private WebElement initHideElements(){
+     return    searchLocator.findByXpath
+                ("//input[contains(@class,'full-height on bd0 pr16 pl16 input')]");
+    }
+    private void initCatalogElements(){
+        catalogPhone = searchLocator.findByXpath("//a[@href='/smartfony/']//div[@class='df aic'][normalize-space()='']");
+    }
     //Locators
 
     private WebElement singIn;
@@ -38,7 +47,11 @@ public abstract class TopPart {
     private WebElement wishList;
     private WebElement language;
     private WebElement catalog;
+    private WebElement searchInput;
+    private WebElement catalogPhone;
+    private WebElement smartWatch;
     // Page Object
+    private WebElement getCatalogPhone(){return catalogPhone;}
 
     private WebElement getSingIn() {return singIn;}
 
@@ -58,15 +71,54 @@ public abstract class TopPart {
         getSingIn().click();
     }
 
+    private void sendTextInSearchField(String text){
+        initElements();
+        getSearch().click();
+        initHideElements().sendKeys(text);
+    }
+    public void clickOnBucket(){
+        initElements();
+        getBasket().click();
+    }
+    public void clickOnCompare(){
+        initElements();
+        getCompareItems().click();
+    }
+
+    private void searchProduct(){
+        initElements();
+        initHideElements().sendKeys(Keys.ENTER);
+        //getSearch().sendKeys(Keys.ENTER);
+    }
+    public void clickOnCatalog(){
+        initElements();
+        getCatalog().click();
+    }
 
 
     //Business logic
 
-
    public LoginPage goToLoginField(){
        clickOnSingIn();
+
        return new LoginPage();
-      //return new HomePage();
    }
+
+   public  ProductPage searchProductFromSearchField(String text){
+       sendTextInSearchField(text);
+         searchProduct();
+
+        return new ProductPage();
+   }
+   public ProductPage searchProductFromCatalogField(String text){
+
+        return new ProductPage();
+   }
+    public ProductPage clickOnCatalogPhone(){
+        clickOnCatalog();
+        initCatalogElements();
+        getCatalogPhone().click();
+        return  new ProductPage();
+    }
 
 }

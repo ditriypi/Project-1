@@ -10,7 +10,7 @@ import tools.browser.BrowserChoice;
 import java.util.List;
 
 public class ExplicitWait extends Search {
-  private final WebDriverWait wait = new WebDriverWait(BrowserChoice.getDriver(),4);
+  private final WebDriverWait wait = new WebDriverWait(BrowserChoice.getDriver(),7);
 
   private ExpectedCondition condition;
 

@@ -1,6 +1,7 @@
 package User;
 
 import org.apache.commons.lang.RandomStringUtils;
+import org.testng.annotations.Test;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,6 +20,19 @@ public class EmailGenerator {
 
     private String generateEmail(String domain, int length) {
         return RandomStringUtils.random(length, "abcdefghijklmnopqrstuvwxyz") + "@" + domain;
+    }
+    }
+     class PhoneGenerator{
+        static int min = 1000000;
+        static int max = 9999999;
+       static double value = Math.random() * (max - min) + min;
+
+
+        public static String rands(){
+            String code = "66";
+            String number =  Integer.toString((int) value);
+            return  code + number;
+
 
     }
 

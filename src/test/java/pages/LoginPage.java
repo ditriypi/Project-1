@@ -54,6 +54,9 @@ public class LoginPage extends HomePage {
    private void clickOnLoginByEmail(){
         getLoginByEmail().click();
    }
+   private void clickOnRegister(){
+        getRegister().click();
+   }
    private   void sendTextInLoginFormPhoneNumber(User user){
         getLoginPhoneNumber().sendKeys(user.getPhone());
     }
@@ -83,6 +86,11 @@ public class LoginPage extends HomePage {
         sendPasswordInPasswordForm(user);
         clickOnContinueButton();
         return  new LoggedUserByEmail();
+    }
+    public  RegistrationPage goToRegisterPage(){
+             clickOnRegister();
+        return  new RegistrationPage();
+
     }
 
 }
