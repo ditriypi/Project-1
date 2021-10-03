@@ -8,7 +8,7 @@ import tools.search.SearchStrategy;
 import org.openqa.selenium.WebElement;
 
 public abstract class TopPart {
-     Search searchLocator =   SearchStrategy.setExplicitStrategy();
+     Search searchLocator = SearchStrategy.getSearch(); // SearchStrategy.setExplicitStrategy();
    // Search search  =  SearchStrategy.getSearch();
 
     TopPart(){

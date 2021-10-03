@@ -22,7 +22,15 @@ public class BrowserChoice  {
         else
             return driver;
     }
+
+    public static void quit(){
+     if(driver != null) {
+         driver.quit();
+     }
+        System.out.println("Driver quit");
+    }
 }
+
 
 
 
