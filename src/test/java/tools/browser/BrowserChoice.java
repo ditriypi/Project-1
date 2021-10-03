@@ -3,6 +3,7 @@ package tools.browser;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 interface Driver{
     WebDriver getDriver();
@@ -40,5 +41,18 @@ public class BrowserChoice  {
          return  new org.openqa.selenium.firefox.FirefoxDriver();
      }
 
+
+ }
+class DriverInstanceChromeWithoutUI implements Driver{
+
+    public WebDriver getDriver() {
+        WebDriverManager.chromedriver().setup();
+        ChromeOptions chromeOptions = new ChromeOptions();
+        chromeOptions.addArguments("--headless");
+        chromeOptions.addArguments("--no-proxy-server");
+        chromeOptions.addArguments("--ignore-certificate-errors");
+        return  new ChromeDriver(chromeOptions);
+
+    }
 
  }

@@ -31,22 +31,42 @@ public class OrderTest extends TestRunner {
 
     }
 
-    /* @DataProvider
+     @DataProvider
      public Object[][] productCatalog(){
-         return new Object[][]{{"Apple iMac 21,5"}};}*/
-    @Test
-    public void findProductByCatalog() {
-        HomePage homePage = loadApplication().searchProductFromCatalogField("").clickOnCatalogPhone();
+         return new Object[][]{{"Samsung Galaxy S20"}};}
+    @Test(dataProvider = "productCatalog")
+    public void findProductByCatalog(String product) {
+        HomePage homePage = loadApplication().searchProductFromCatalogField();
 
+         ProductPage productPage  = homePage.clickOnCatalogPhone()
+                 .clickOnProductFromCatalog();
+         String productTitle = productPage.getTitleProductFromCatalog();
+         Assert.assertTrue(productTitle.contains(product));
 
     }
-    @Test
-    public void product(){
-        WebDriver driver =  BrowserChoice.getDriver();
-        driver.get("https://www.citrus.ua/");
-        driver.findElement
-                (By.xpath("//form[contains(@class,'full-width full-height" +
-                        " ovh df jcsb aic container')] //input")).click();
+
+    @Test(dataProvider = "productCatalog")
+    public void addProductToBucket(String product){
+        HomePage homePage = loadApplication().searchProductFromCatalogField();
+
+        ProductPage productPage  = homePage.clickOnCatalogPhone()
+                .clickOnProductFromCatalog();
+
+        String productTitle = productPage.getTitleProductFromCatalog();
+        System.out.println(productTitle);
+
+        Assert.assertTrue(productTitle.contains(product));
+
+         homePage = productPage.addProductToBucket();
+         homePage.clickOnBucket();
+        String productName = homePage.getBucketProductName();
+
+
+        Assert.assertTrue(productName.contains(product));
+
+
+
+
     }
 }
 

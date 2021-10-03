@@ -8,13 +8,12 @@ import tools.browser.DriverList;
 
 public abstract class TestRunner {
    final private   String URL =  "https://www.citrus.ua/";
-private  static WebDriver driver;
    public HomePage loadApplication(){
        BrowserChoice.SetDriver(DriverList.CHROMEDRIVER);
-       driver = BrowserChoice.getDriver();
-       driver.manage().window().maximize();
-       driver.get(URL);
-      // BrowserChoice.getDriver().get(URL);
+
+       BrowserChoice.getDriver().manage().window().maximize();
+
+       BrowserChoice.getDriver().get(URL);
        return new  HomePage();
    }
 

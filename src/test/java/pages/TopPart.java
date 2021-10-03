@@ -38,6 +38,9 @@ public abstract class TopPart {
     private void initCatalogElements(){
         catalogPhone = searchLocator.findByXpath("//a[@href='/smartfony/']//div[@class='df aic'][normalize-space()='']");
     }
+    private void initBucketTotal(){
+        bucketTotal = searchLocator.findByXpath("//a[@class='link line-clamp-1']");
+    }
     //Locators
 
     private WebElement singIn;
@@ -50,7 +53,12 @@ public abstract class TopPart {
     private WebElement searchInput;
     private WebElement catalogPhone;
     private WebElement smartWatch;
+    private WebElement bucketTotal;
     // Page Object
+    private WebElement getBucketTotal(){
+        initBucketTotal();
+        return bucketTotal;
+    }
     private WebElement getCatalogPhone(){return catalogPhone;}
 
     private WebElement getSingIn() {return singIn;}
@@ -84,6 +92,11 @@ public abstract class TopPart {
         initElements();
         getCompareItems().click();
     }
+    public String getBucketContain(){
+        initElements();
+
+        return null;
+    }
 
     private void searchProduct(){
         initElements();
@@ -93,6 +106,10 @@ public abstract class TopPart {
     public void clickOnCatalog(){
         initElements();
         getCatalog().click();
+    }
+
+    public String getBucketProductName(){
+      return   getBucketTotal().getText();
     }
 
 
@@ -110,12 +127,12 @@ public abstract class TopPart {
 
         return new ProductPage();
    }
-   public ProductPage searchProductFromCatalogField(String text){
+   public ProductPage searchProductFromCatalogField(){
+       clickOnCatalog();
 
         return new ProductPage();
    }
     public ProductPage clickOnCatalogPhone(){
-        clickOnCatalog();
         initCatalogElements();
         getCatalogPhone().click();
         return  new ProductPage();
